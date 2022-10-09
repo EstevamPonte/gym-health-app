@@ -1,8 +1,9 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToOne } from "typeorm";
 import { v4 as uuid } from 'uuid'
 import { Exclude } from "class-transformer";
+import { Code } from "./Code"
 
-@Entity('users')
+@Entity('user')
 class User {
   @PrimaryColumn()
   readonly id: string
@@ -19,6 +20,13 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date
+
+  @Column()
+  code_reference: string
+
+  @JoinColumn({name: "code_reference"})
+  @OneToOne(() => Code)
+  codeReference: Code
 
   constructor() {
     if(!this.id) {

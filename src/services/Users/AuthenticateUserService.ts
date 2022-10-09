@@ -1,8 +1,9 @@
-import { getCustomRepository } from 'typeorm'
-import { UserRepositories } from '../../repositories/UserRepositories'
-import { compare } from 'bcryptjs'
-import { sign } from 'jsonwebtoken'
-import { instanceToPlain } from 'class-transformer'
+import { getCustomRepository } from 'typeorm';
+import { UserRepositories } from '../../repositories/UserRepositories';
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { instanceToPlain } from 'class-transformer';
+import {User} from "../../entities/User"
 
 interface IAuthenticateRequest {
   name: string,
@@ -14,8 +15,8 @@ class AuthenticateUserService {
     const userRepositories = getCustomRepository(UserRepositories)
 
     const user = await userRepositories.findOne({
-      name
-    })
+      name,
+    }, {relations: ["codeReference"]})
     if(!user) {
       throw new Error("Email/Senha está incorreto")
     }
@@ -33,7 +34,9 @@ class AuthenticateUserService {
       expiresIn: '1d'
     })
 
-    return {token, user: instanceToPlain(user)}
+    let userResponse = instanceToPlain(user);
+
+    return {...userResponse, token}
   }
 }
 

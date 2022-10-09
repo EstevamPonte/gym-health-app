@@ -1,11 +1,10 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class users1626292391930 implements MigrationInterface {
-
+export class userTable1665285254754 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'users',
+                name: 'user',
                 columns: [
                     {
                         name: 'id',
@@ -22,6 +21,11 @@ export class users1626292391930 implements MigrationInterface {
                         isNullable: true,
                     },
                     {
+                        name: 'code_reference',
+                        type: 'uuid',
+                        isNullable: true
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp',
                         default: 'now()'
@@ -31,13 +35,23 @@ export class users1626292391930 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()'
                     }
+                ],
+                foreignKeys: [
+                    {
+                        name: 'FLCode',
+                        referencedTableName: 'code',
+                        referencedColumnNames: ['id'],
+                        columnNames: ['code_reference'],
+                        onDelete: 'SET NULL',
+                        onUpdate: 'SET NULL'
+                    }
                 ]
             })
         )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('users')
+        await queryRunner.dropTable('user')
     }
 
 }
