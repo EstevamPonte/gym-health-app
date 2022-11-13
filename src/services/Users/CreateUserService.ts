@@ -16,6 +16,8 @@ class CreateUserService {
       throw new Error("Senha incorreta")
     }
 
+    console.log(name)
+
     const userAlreadyExists = await usersRepository.findOne({
       name
     })

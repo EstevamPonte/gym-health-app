@@ -3,7 +3,6 @@ import { UserRepositories } from '../../repositories/UserRepositories';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { instanceToPlain } from 'class-transformer';
-import {User} from "../../entities/User"
 
 interface IAuthenticateRequest {
   name: string,

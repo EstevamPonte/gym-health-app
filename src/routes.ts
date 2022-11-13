@@ -3,6 +3,7 @@ import { ensureAuthenticate } from "./middlewares/ensureAuthenticate";
 import { CreateUserController } from "./controller/Users/CreateUserController";
 import { AuthenticateUserController } from "./controller/Users/AuthenticateUserController";
 import { CreateCodeController } from "./controller/Code/CreateCodeController";
+import { AuthenticateUserWithCodeController } from "./controller/Code/AuthenticateUserWithCodeController";
 import { CreateFileController } from "./controller/File/CreateFileController";
 import { ListFileController } from "./controller/File/ListFileController";
 import { DeleteFileController } from "./controller/File/DeleteFileController";
@@ -16,6 +17,7 @@ const router = Router();
 const createUserController = new CreateUserController();
 const acauthenticateUserController = new AuthenticateUserController();
 const createCodeController = new CreateCodeController();
+const authenticateUserWithCodeController = new AuthenticateUserWithCodeController();
 
 const createFileController = new CreateFileController();
 const listFileController = new ListFileController();
@@ -30,6 +32,7 @@ router.post("/user", createUserController.handle);
 router.post("/login", acauthenticateUserController.handle)
 
 router.get("/createCode", ensureAuthenticate, createCodeController.handle)
+router.post("/loginWithCode", authenticateUserWithCodeController.handle)
 
 router.post("/createFile", ensureAuthenticate, createFileController.handle)
 router.get("/listFile", ensureAuthenticate, listFileController.handle)
