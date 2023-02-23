@@ -9,7 +9,7 @@ class CreateCodeService {
     const codeRepository = getCustomRepository(CodeRepositories);
 
     const usersRepository = getCustomRepository(UserRepositories);
-    const user = await usersRepository.findOne(user_id);
+    const user = await usersRepository.findOne(user_id, {relations: ["codeReference"]});
 
     if (!!user.code_reference) {
       const random = new Random();
@@ -19,7 +19,9 @@ class CreateCodeService {
       code.codeNumber = value;
       codeRepository.save(code);
 
-      return value
+      user.codeReference.codeNumber = value;
+
+      return instanceToPlain(user)
     } else {
       const random = new Random();
       const value = random.integer(9999999, 99999999);
@@ -29,8 +31,10 @@ class CreateCodeService {
       
       user.codeReference = code;
       usersRepository.save(user);
+
+      user.codeReference.codeNumber = value;
       
-      return value
+      return instanceToPlain(user)
     }
 
   }

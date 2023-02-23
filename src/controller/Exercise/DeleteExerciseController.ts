@@ -3,7 +3,6 @@ import { DeleteExerciseService } from "../../services/Exercise/DeleteExerciseSer
 
 class DeleteExerciseController {
   async handle(request: Request, response: Response) {
-      console.log("oiii")
     const deleteExerciseService = new DeleteExerciseService();
     const {fileId} = request.params
 

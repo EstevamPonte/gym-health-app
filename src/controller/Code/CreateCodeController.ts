@@ -5,9 +5,9 @@ class CreateCodeController {
   async handle(request: Request, response: Response) {
     const cretaeCodeService = new CreateCodeService();
 
-    const code = await cretaeCodeService.execute(request.user_id);
+    const user = await cretaeCodeService.execute(request.user_id);
 
-    return response.json(code)
+    return response.json(user)
   }
 }
 

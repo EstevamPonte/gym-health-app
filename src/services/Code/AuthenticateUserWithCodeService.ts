@@ -27,11 +27,8 @@ class AuthenticateUserWithCodeService {
     if(!user) {
       throw new Error("Não existe um usuário com esse código");
     }
-    console.log(codeNumber)
 
     const codeMatch = user.codeReference.codeNumber === codeNumber;
-
-    console.log(codeMatch)
 
     if (!codeMatch) {
       throw new Error("Não existe um usuário com esse código");
