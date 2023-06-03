@@ -7,6 +7,9 @@ class ListExerciseService {
         const exercises = await exerciseRepositories.find({
             where: {
                 file_reference: fileId
+            },
+            order: {
+                created_at: "ASC"
             }
         })
 
