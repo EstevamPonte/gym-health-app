@@ -29,8 +29,7 @@ class AuthenticateUserService {
     const token = sign({
       name: user.name,
     }, '51dfd5bda8356ced09e100a297586a3d', {
-      subject: String(user.id),
-      expiresIn: '1d'
+      subject: String(user.id)
     })
 
     let userResponse = instanceToPlain(user);
