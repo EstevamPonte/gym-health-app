@@ -7,7 +7,9 @@
     "start": "node build/server.js",
     "dev": "ts-node-dev src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli -f ./ormconfig.js",
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "run-migrations": "npm run typeorm migration:run",
+    "create-database": "psql -U postgres -f src/database/create_database.sql && npm run run-migrations"
   },
   "keywords": [],
   "author": "",

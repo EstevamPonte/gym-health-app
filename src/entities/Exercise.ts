@@ -26,7 +26,9 @@ class Exercise {
     file_reference: string
 
     @JoinColumn({name: "file_reference"})
-    @ManyToOne(() => File)
+    @ManyToOne(() => File, {
+        onDelete: "CASCADE"
+    })
     fileReference: File
     
     @CreateDateColumn()

@@ -25,7 +25,9 @@ class User {
   code_reference: string
 
   @JoinColumn({name: "code_reference"})
-  @OneToOne(() => Code)
+  @OneToOne(() => Code, {
+      onDelete: "CASCADE"
+  })
   codeReference: Code
 
   constructor() {

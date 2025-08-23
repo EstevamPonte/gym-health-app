@@ -14,7 +14,9 @@ class File {
     user_reference: number
 
     @JoinColumn({name: "user_reference"})
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, {
+        onDelete: "CASCADE"
+    })
     userReference: User
     
     @CreateDateColumn()
