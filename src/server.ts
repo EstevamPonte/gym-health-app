@@ -1,11 +1,10 @@
 import dotenv from "dotenv";
 import { expand } from "dotenv-expand";
-expand(dotenv.config({ path: "../.env.development" }));
+dotenv.config();
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 
-console.log("TESTE", process.env.NODE_ENV);
 import cors from "cors";
 import { router } from "./routes";
 import "./database";

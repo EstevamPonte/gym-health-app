@@ -1,7 +1,3 @@
-const dotenv = require("dotenv");
-const { expand } = require("dotenv-expand");
-expand(dotenv.config({ path: ".env.development" }));
-
 module.exports = {
   type: "postgres",
   url: process.env.DATABASE_URL,
