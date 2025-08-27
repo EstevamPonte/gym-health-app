@@ -7,7 +7,7 @@
     "start": "node build/server.js",
     "dev": "yarn svcs:up && yarn svcs:wait:database && yarn run-migrations && ts-node-dev src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli -f ./ormconfig.js",
-    "build": "tsc --build && yarn svcs:up && yarn svcs:wait:database && yarn run-migrations",
+    "build": "tsc --build && yarn run-migrations",
     "run-migrations": "npm run typeorm migration:run",
     "create-database": "psql -U postgres -f src/database/create_database.sql && npm run run-migrations",
     "svcs:up": "docker compose -f src/database/compose.yaml up -d",
