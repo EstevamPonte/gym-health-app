@@ -1,19 +1,24 @@
-import { Request, Response } from 'express'
-import { AuthenticateUserService } from '../../services/Users/AuthenticateUserService'
+import { Request, Response } from "express";
+import {
+  AuthenticateUserService,
+  setSessionCookie,
+} from "../../services/Users/AuthenticateUserService";
 
 class AuthenticateUserController {
   async handle(request: Request, response: Response) {
-    const { name, password } = request.body
+    const { name, password } = request.body;
 
-    const authenticateUserService = new AuthenticateUserService()
-    
+    const authenticateUserService = new AuthenticateUserService();
+
     const token = await authenticateUserService.execute({
       name,
-      password
-    })
+      password,
+    });
 
-    return response.json(token)
+    setSessionCookie(token.token, response);
+
+    return response.json(token);
   }
 }
 
-export {AuthenticateUserController}
+export { AuthenticateUserController };

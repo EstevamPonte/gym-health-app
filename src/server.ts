@@ -11,7 +11,12 @@ import "./database";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // URL exata do seu front-end
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 app.use(router);
