@@ -1,40 +1,42 @@
 import { getCustomRepository } from "typeorm";
 import { UserRepositories } from "../../repositories/UserRepositories";
 import { hash } from "bcryptjs";
-import { instanceToPlain } from 'class-transformer'
+import { instanceToPlain } from "class-transformer";
 
 interface IUserRequest {
-  name: string
-  password: string
+  name: string;
+  password: string;
+  email: string;
 }
 
 class CreateUserService {
-  async execute({name, password}: IUserRequest) {
-    const usersRepository = getCustomRepository(UserRepositories)
+  async execute({ name, password, email }: IUserRequest) {
+    const usersRepository = getCustomRepository(UserRepositories);
 
-    if(!password) {
-      throw new Error("Senha incorreta")
+    if (!password) {
+      throw new Error("Senha incorreta");
     }
 
     const userAlreadyExists = await usersRepository.findOne({
-      name
-    })
+      email,
+    });
 
-    if(userAlreadyExists) {
-      throw new Error('Já existe um usuário com esse nome')
+    if (userAlreadyExists) {
+      throw new Error("Já existe um usuário com esse nome");
     }
 
-    const passwordHash = await hash(password, 8)
+    const passwordHash = await hash(password, 8);
 
     const user = usersRepository.create({
       name,
-      password: passwordHash
-    })
+      password: passwordHash,
+      email,
+    });
 
-    await usersRepository.save(user)
+    await usersRepository.save(user);
 
-    return instanceToPlain(user)
+    return instanceToPlain(user);
   }
 }
 
-export {CreateUserService}
+export { CreateUserService };

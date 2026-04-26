@@ -7,7 +7,7 @@ import * as cookie from "cookie";
 import { Response } from "express";
 
 interface IAuthenticateRequest {
-  name: string;
+  email: string;
   password: string;
 }
 
@@ -40,15 +40,16 @@ function getCookie(cookies: string) {
 }
 
 class AuthenticateUserService {
-  async execute({ name, password }: IAuthenticateRequest) {
+  async execute({ email, password }: IAuthenticateRequest) {
     const userRepositories = getCustomRepository(UserRepositories);
 
     const user = await userRepositories.findOne(
       {
-        name,
+        email,
       },
       { relations: ["codeReference"] },
     );
+
     if (!user) {
       throw new Error("Email/Senha está incorreto");
     }
@@ -61,7 +62,7 @@ class AuthenticateUserService {
 
     const token = sign(
       {
-        name: user.name,
+        email: user.email,
       },
       "51dfd5bda8356ced09e100a297586a3d",
       {
@@ -71,7 +72,7 @@ class AuthenticateUserService {
 
     let userResponse = instanceToPlain(user);
 
-    return { ...userResponse, token };
+    return { user: userResponse, token };
   }
 }
 

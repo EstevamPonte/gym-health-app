@@ -1,10 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class userTable1665285254754 implements MigrationInterface {
+export class createSession1772238190880 implements MigrationInterface {
+  name = "createSession1772238190880";
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "user",
+        name: "session",
         columns: [
           {
             name: "id",
@@ -12,23 +14,19 @@ export class userTable1665285254754 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: "email",
+            name: "token",
             type: "varchar",
+            isUnique: true,
             isNullable: false,
           },
           {
-            name: "name",
-            type: "varchar",
-          },
-          {
-            name: "password",
-            type: "varchar",
-            isNullable: true,
-          },
-          {
-            name: "code_reference",
+            name: "user_reference",
             type: "uuid",
-            isNullable: true,
+          },
+          {
+            name: "expires_at",
+            type: "timestamp",
+            isNullable: false,
           },
           {
             name: "created_at",
@@ -40,19 +38,13 @@ export class userTable1665285254754 implements MigrationInterface {
             type: "timestamp",
             default: "now()",
           },
-          {
-            name: "features",
-            type: "varchar", // Remova o [] daqui
-            isArray: true, // O TypeORM cuidará de transformar em varchar[] no banco
-            default: "'{}'", // Aspas simples por fora para indicar que é um valor literal
-          },
         ],
         foreignKeys: [
           {
-            name: "FLCode",
-            referencedTableName: "code",
+            name: "FLUserRef",
+            referencedTableName: "user",
             referencedColumnNames: ["id"],
-            columnNames: ["code_reference"],
+            columnNames: ["user_reference"],
             onDelete: "SET NULL",
             onUpdate: "SET NULL",
           },
@@ -62,6 +54,6 @@ export class userTable1665285254754 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("user");
+    await queryRunner.dropTable("session");
   }
 }
