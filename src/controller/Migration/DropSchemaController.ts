@@ -18,8 +18,8 @@ class DropSchemaController {
       await connection.runMigrations();
       return response.json({ message: "Migrations executed successfully" });
     } catch (error) {
-      console.error("Error running migrations:", error);
-      return response.status(500).json({ message: "Error running migrations" });
+      console.error(error);
+      throw new Error("Não existe um usuário com esse código");
     } finally {
       await queryRunner.release();
     }
