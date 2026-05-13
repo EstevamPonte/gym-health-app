@@ -1,3 +1,10 @@
-import { createConnection } from 'typeorm'
+import { createConnection, getConnection } from "typeorm/globals";
 
-createConnection()
+async function connect() {
+  await createConnection();
+}
+
+export default {
+  connect,
+  getConnection,
+};

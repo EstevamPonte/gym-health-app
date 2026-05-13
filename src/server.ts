@@ -7,7 +7,9 @@ import "express-async-errors";
 
 import cors from "cors";
 import { router } from "./routes";
-import "./database";
+import database from "./database";
+
+database.connect();
 
 const app = express();
 

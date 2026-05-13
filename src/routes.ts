@@ -1,5 +1,6 @@
-import { Request, Response, Router } from "express";
+import e, { Request, Response, Router } from "express";
 import { ensureAuthenticate } from "./middlewares/ensureAuthenticate";
+import { ensureDevelopmentEnv } from "./middlewares/ensureDevelopmentEnv";
 import { CreateUserController } from "./controller/Users/CreateUserController";
 import { AuthenticateUserController } from "./controller/Users/AuthenticateUserController";
 import { DeleteUserController } from "./controller/Users/DeleteUserController";
@@ -15,6 +16,7 @@ import { DeleteExerciseController } from "./controller/Exercise/DeleteExerciseCo
 import { UpdateExerciseController } from "./controller/Exercise/UpdateExerciseController";
 import { CreateSuggestionsController } from "./controller/Suggestions/CreateSuggestionsController";
 import { ListSuggestionsController } from "./controller/Suggestions/ListSuggestionsController";
+import { DropSchemaController } from "./controller/Migration/DropSchemaController";
 
 const router = Router();
 
@@ -38,6 +40,7 @@ const updateExerciseController = new UpdateExerciseController();
 
 const createSuggestionsController = new CreateSuggestionsController();
 const listSuggestionsController = new ListSuggestionsController();
+const dropSchemaController = new DropSchemaController();
 
 router.post("/user", createUserController.handle);
 router.delete("/deleteuser", ensureAuthenticate, deleteUserController.handle);
@@ -76,6 +79,7 @@ router.put(
   updateExerciseController.handle,
 );
 
+router.get("/dropschema", ensureDevelopmentEnv, dropSchemaController.handle);
 router.post("/suggestions", createSuggestionsController.handle);
 router.get("/suggestions", listSuggestionsController.handle);
 
